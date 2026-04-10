@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SF Knowledge — The San Francisco Route Test</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="sidebar">
+      <header>
+        <h1>SF Knowledge</h1>
+        <p class="subtitle">The San Francisco Route Test</p>
+      </header>
+
+      <section id="mode-section">
+        <label class="section-label">Mode</label>
+        <div class="toggle-group">
+          <button id="btn-driving" class="toggle-btn active">&#128663; Driving</button>
+          <button id="btn-bus" class="toggle-btn">&#128652; Bus</button>
+        </div>
+      </section>
+
+      <section id="api-key-section" class="hidden">
+        <label class="section-label" for="api-key-input">Geoapify API Key</label>
+        <input id="api-key-input" type="text" placeholder="Paste your free key here..." autocomplete="off" />
+        <a id="api-key-link" href="https://www.geoapify.com/" target="_blank" rel="noopener">Get a free key at geoapify.com</a>
+        <p class="api-key-note">Key is saved in your browser. Bus mode requires this for transit routing.</p>
+      </section>
+
+      <section id="challenge-section">
+        <button id="btn-new-challenge">New Challenge</button>
+
+        <div id="challenge-info" class="hidden">
+          <div class="landmark-row">
+            <span class="badge badge-a">A</span>
+            <span id="landmark-from-name" class="landmark-name"></span>
+          </div>
+          <div class="arrow-row">&#8595;</div>
+          <div class="landmark-row">
+            <span class="badge badge-b">B</span>
+            <span id="landmark-to-name" class="landmark-name"></span>
+          </div>
+        </div>
+      </section>
+
+      <section id="drawing-controls" class="hidden">
+        <p id="hint-text" class="hint"></p>
+        <div class="btn-row">
+          <button id="btn-undo" class="btn-secondary">Undo</button>
+          <button id="btn-clear" class="btn-secondary">Clear</button>
+          <button id="btn-submit" class="btn-primary" disabled>Submit</button>
+        </div>
+        <p id="waypoint-count" class="waypoint-count">0 waypoints placed</p>
+      </section>
+
+      <section id="loading-section" class="hidden">
+        <div class="spinner"></div>
+        <p>Calculating optimal route&hellip;</p>
+      </section>
+
+      <section id="error-section" class="hidden">
+        <p id="error-message" class="error-text"></p>
+        <button id="btn-retry" class="btn-secondary">Try Again</button>
+      </section>
+
+      <section id="results-section" class="hidden">
+        <div id="score-display">
+          <span id="grade-badge" class="grade-badge">A</span>
+          <div id="score-details">
+            <span id="score-number" class="score-number">82</span>
+            <span id="grade-label" class="grade-label">Street-Smart</span>
+          </div>
+        </div>
+
+        <div id="score-breakdown">
+          <div class="score-row">
+            <span class="score-row-label">Efficiency</span>
+            <div class="score-bar-wrap">
+              <div id="eff-bar" class="score-bar"></div>
+            </div>
+            <span id="eff-score" class="score-row-val">--</span>
+          </div>
+          <div class="score-row">
+            <span class="score-row-label">Adherence</span>
+            <div class="score-bar-wrap">
+              <div id="adh-bar" class="score-bar"></div>
+            </div>
+            <span id="adh-score" class="score-row-val">--</span>
+          </div>
+        </div>
+
+        <div id="route-stats">
+          <div class="stat-row">
+            <span class="stat-label">Optimal</span>
+            <span id="opt-stats" class="stat-value"></span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Your route</span>
+            <span id="usr-stats" class="stat-value"></span>
+          </div>
+        </div>
+
+        <button id="btn-next" class="btn-primary">Next Challenge</button>
+      </section>
+
+      <footer>
+        <p>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors</p>
+      </footer>
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
